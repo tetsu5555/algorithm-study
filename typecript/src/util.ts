@@ -4,7 +4,7 @@ const generateRandomNum = (min: number, max: number) => {
 }
 
 const getRandomArray = (size: number, option:any = { min: 0, max: size }) => {
-  const result = new Array(size).map(() => {
+  const result = [...Array(size)].map(() => {
     return generateRandomNum(option.min, option.max)
   })
   return result;
