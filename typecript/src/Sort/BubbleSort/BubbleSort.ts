@@ -10,19 +10,10 @@ const sortBiggestToLast = (array: Array<number>) => {
 }
 
 const bubbleSort = (array: Array<number>) => {
-  let result = [...array];
-  const n = result.length - 1;
-  for(let end = n; end > 0; end--) {
-    result = sortBiggestToLast(result);
-  }
+  let target = [...array];
+  const result = target.reduce((accumulator) => sortBiggestToLast(accumulator), target)
 
   return result;
 }
 
-const array = [7, 5, 10, 3, 4];
-const sorted = bubbleSort(array);
-console.log(sorted); // [3, 4, 5, 7, 10]
-
-export {
-  bubbleSort
-};
+export { bubbleSort }
