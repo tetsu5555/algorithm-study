@@ -1,7 +1,7 @@
 // 連結リストの要素
 class LinkedListNode {
   public value: any;
-  public next: any;
+  public next: LinkedListNode | null;
   
   constructor(value: any) {
     this.value = value;
@@ -10,7 +10,7 @@ class LinkedListNode {
 }
 
 class LinkedList {
-  public head: any;
+  public head: LinkedListNode | null;
   
   constructor() {
     this.head = null
