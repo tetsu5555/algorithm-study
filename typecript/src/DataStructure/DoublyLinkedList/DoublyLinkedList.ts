@@ -1,21 +1,13 @@
-class DoublyLinkedListNode {
-  public value: any;
-  public prev: DoublyLinkedListNode | null;
-  public next: DoublyLinkedListNode | null;
+class DoublyLinkedListNode<T> {
+  public prev: DoublyLinkedListNode<T> | null = null;
+  public next: DoublyLinkedListNode<T> | null = null;
 
-  constructor(
-    value: any,
-    prev: DoublyLinkedListNode | null = null
-  ) {
-    this.value = value
-    this.prev = prev
-    this.next = null
-  }
+  constructor(public data: T) {}
 }
 
-class DoublyLinkedList {
-  public head: DoublyLinkedListNode | null;
-  public tail: DoublyLinkedListNode | null;
+class DoublyLinkedList<T> {
+  public head: DoublyLinkedListNode<T> | null;
+  public tail: DoublyLinkedListNode<T> | null;
   public length: number;
 
   constructor() {
@@ -24,24 +16,34 @@ class DoublyLinkedList {
     this.length = 0;
   }
 
-  push(val: any) {
-    const newNode = new DoublyLinkedListNode(val);
+  push(data: T) {
+    const newNode = new DoublyLinkedListNode(data);
     if (this.length === 0) {
       this.head = newNode
       this.tail = newNode
     } else {
-      if (!this.head || !this.tail) throw new Error('unexpected');
-
-      this.tail.next = newNode;
+      (this.tail as DoublyLinkedListNode<T>).next = newNode;
       newNode.prev = this.tail;
       this.tail = newNode;
     }
     this.length++;
-    return this;
   }
 
-  pop() {
-
+  pop(): DoublyLinkedListNode<T> | null {
+    if (this.length === 0) return null;
+    if (this.tail === null) return null;
+    
+    const temp = this.tail;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.tail = temp.prev as DoublyLinkedListNode<T>;
+      this.tail.next = null;
+      temp.prev = null;
+    }
+    this.length--;
+    return temp;
   }
 }
 

@@ -1,5 +1,10 @@
 import { DoublyLinkedList, DoublyLinkedListNode } from "./DoublyLinkedList"
 
+type Book = {
+  readonly name: string;
+}
+const book: Book = { name: 'book1' };
+const book2: Book = { name: 'book2' };
 
 describe('doublyLinkedList', () => {
   test('initialize', () => {
@@ -11,49 +16,32 @@ describe('doublyLinkedList', () => {
   })
   
   test('push', () => {
-    const dll = new DoublyLinkedList();
-    const dlln = new DoublyLinkedListNode(10);
-    dll.push(10);
+    const doublyLinkedList = new DoublyLinkedList<Book>();
+    doublyLinkedList.push(book);
 
-    expect(dll.head).toEqual(dlln)
-    expect(dll.tail).toEqual(dlln)
-    expect(dll.length).toEqual(1)
+    expect(doublyLinkedList.head?.data).toEqual(book);
+    expect(doublyLinkedList.tail?.data).toEqual(book);
+    expect(doublyLinkedList.length).toBe(1);
   })
 
-  test('push2', () => {
-    const dll = new DoublyLinkedList();
-    dll.push(1);
-    dll.push(2);
+  test('push double', () => {
+    const doublyLinkedList = new DoublyLinkedList<Book>();
+    doublyLinkedList.push(book);
+    doublyLinkedList.push(book2);
 
-    const first = new DoublyLinkedListNode(1);
-    const second = new DoublyLinkedListNode(2);
-    first.next = second;
-    second.prev = first;
-
-    expect(dll.head).toEqual(first)
-    expect(dll.tail).toEqual(second)
-    expect(dll.length).toEqual(2)
+    expect(doublyLinkedList.head?.data).toEqual(book);
+    expect(doublyLinkedList.tail?.data).toEqual(book2);
+    expect(doublyLinkedList.length).toBe(2);
   })
 
-  test('push3', () => {
-    const dll = new DoublyLinkedList();
-    dll.push(1);
-    dll.push(2);
-    dll.push(3);
+  test("linked", () => {
+    const doublyLinkedList = new DoublyLinkedList<Book>();
+    doublyLinkedList.push(book);
+    doublyLinkedList.push(book2);
 
-    const first = new DoublyLinkedListNode(1);
-    const second = new DoublyLinkedListNode(2);
-    first.next = second;
-    second.prev = first;
-    const third = new DoublyLinkedListNode(3);
-    second.next = third;
-    third.prev = third;
-
-    expect(dll.head?.value).toEqual(first.value);
-    expect(dll.head?.prev).toEqual(null);
-    expect(dll.head?.next).toEqual(second)
-
-    expect(dll.tail?.value).toEqual(third.value);
-    expect(dll.length).toEqual(3);
+    expect(doublyLinkedList.head?.next?.data).toBe(book2);
+    expect(doublyLinkedList.head?.prev).toBeNull();
+    expect(doublyLinkedList.tail?.prev?.data).toBe(book);
+    expect(doublyLinkedList.tail?.next).toBeNull();
   })
 })
