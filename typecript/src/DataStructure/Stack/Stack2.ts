@@ -1,17 +1,17 @@
+import { Collection } from "../common";
 interface IStack<T> {
   push(item: T): void;
   pop(): T | undefined;
   peek(): T | undefined;
   size(): number;
 }
-
-class Stack<T> implements IStack<T> {
-  private storage: T[] = [];
-
-  constructor(private capacity: number = Infinity) {};
+class Stack<T> extends Collection<T> implements IStack<T> {
+  constructor(private capacity: number = Infinity) {
+    super();
+  };
 
   push(item: T) {
-    if (this.size() === this.capacity) {
+    if (this.isFull()) {
       throw Error("Stack has reached max capacity, you cannot add more items");
     }
     this.storage.push(item);
@@ -27,6 +27,10 @@ class Stack<T> implements IStack<T> {
 
   size() {
     return this.storage.length;
+  }
+
+  isFull() {
+    return this.capacity === this.size();
   }
 }
 
