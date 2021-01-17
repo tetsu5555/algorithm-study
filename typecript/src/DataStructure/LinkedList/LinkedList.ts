@@ -1,23 +1,14 @@
 // 連結リストの要素
-class LinkedListNode {
-  public value: any;
-  public next: LinkedListNode | null;
-  
-  constructor(value: any) {
-    this.value = value;
-    this.next = null;
-  }
+class LinkedListNode<T> {
+  public next: LinkedListNode<T> | null = null;
+  constructor(public value: T) {}
 }
 
-class LinkedList {
-  public head: LinkedListNode | null;
-  
-  constructor() {
-    this.head = null
-  }
+class LinkedList<T> {
+  public head: LinkedListNode<T> | null = null;
 
   // 末尾の要素を追加する
-  push(value: any) {
+  push(value: T): void {
     const node = new LinkedListNode(value);
 
     if (!this.head) {
@@ -33,7 +24,7 @@ class LinkedList {
     current.next = node;
   }
 
-  unshift(value: any) {
+  unshift(value: T): void {
     const node = new LinkedListNode(value);
     node.next = this.head;
     this.head = node;
