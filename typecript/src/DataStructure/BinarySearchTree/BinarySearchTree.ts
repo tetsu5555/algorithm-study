@@ -31,7 +31,39 @@ class BinarySearchTree {
 
     // 空いている部分にノードを追加する
     current[direction] = node;
-  } 
+  }
+
+  findNodeByValue(value: number) {
+    let result: BinaryTreeNode | null = null;
+
+    let current = this.root as BinaryTreeNode;
+    if (current.value === value) return current;
+    let direction = value < current.value ? LEFT : RIGHT;
+    while (current[direction]) {
+      current = current[direction] as BinaryTreeNode;
+      if (current.value === value) {
+        result = current
+        break;
+      }
+      direction = value < current.value ? LEFT : RIGHT;
+    }
+
+    return result;
+  }
+
+  // TODO: implement
+  delete(value: number) {
+    if (!this.root) {
+      return false;
+    }
+
+    const targetNode = this.findNodeByValue(value);
+    // 値が見つからない
+    if (!targetNode) return false;
+
+    this.root = null;
+    return true;
+  }
 }
 
 export {
